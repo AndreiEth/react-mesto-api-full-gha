@@ -1,0 +1,33 @@
+.element__image {
+    margin: 0;
+    padding: 0;
+    width: 282px;
+    max-width: 282px;
+    height: 282px;
+    min-height: 282px;
+    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    object-fit: cover; 
+}
+
+
+@media screen and (max-width:900px) {
+    .element__image {
+        width: 244px;
+        max-width: 244px;
+        height: 244px;
+        min-height: 244px;
+    }
+}
+
+@media screen and (max-width:790px) {
+    .element__image {
+        width: 282px;
+        max-width: 282px;
+        height: 282px;
+        min-height: 282px;
+    }
+}

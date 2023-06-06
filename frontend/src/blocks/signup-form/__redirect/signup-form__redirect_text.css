@@ -1,0 +1,10 @@
+.signup-form__redirect_text {
+    text-decoration: none;
+    color: white;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 5px;
+}
+

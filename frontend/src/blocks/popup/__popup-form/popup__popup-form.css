@@ -1,0 +1,26 @@
+.popup__popup-form {
+  padding: 0 0 11px 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  border: none;
+  max-width: 358px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.popup__popup-form:focus {
+  outline: none;
+}
+
+.popup__popup-form:last-of-type {
+  margin-bottom: 0px;
+}
+
+@media screen and (max-width:620px) {
+  .popup__popup-form:last-of-type {
+    margin-bottom: 0px;
+  }
+}

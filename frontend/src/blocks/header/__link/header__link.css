@@ -1,0 +1,36 @@
+.header__link {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #fff;
+  text-decoration: none;
+  padding: 0;
+  margin-bottom: 46px;
+  transition: opacity 1s linear 0s;
+  margin-top: 6px;
+}
+
+.header__link:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width:790px) {
+  .header__link {
+    margin-right: 34px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width:320px) {
+
+  .header__link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-right: 27px;
+    margin-bottom: 33px;
+  }
+}

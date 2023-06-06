@@ -1,0 +1,12 @@
+.signup-form__header {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width:790px) {
+    .signup-form__header {
+        margin-top: 0px;
+    }
+}
+

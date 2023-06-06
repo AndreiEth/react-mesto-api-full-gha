@@ -1,0 +1,14 @@
+.header__button {
+    width: 24px;
+    height: 24px;
+    background: no-repeat url(../../../images/burger.svg) center;
+    border: none;
+    margin-right: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 1s linear 0s;
+}
+
+.header__button:hover {
+    opacity: 0.6;
+}

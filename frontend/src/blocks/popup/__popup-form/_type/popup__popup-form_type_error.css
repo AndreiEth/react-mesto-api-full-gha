@@ -1,0 +1,26 @@
+.popup__popup-form_type_error {
+    padding: 0 0 11px 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    border: none;
+    max-width: 358px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #FF0000;
+  }
+  
+  .popup__popup-form_type_error:focus {
+    outline: none;
+  }
+  
+  .popup__popup-form_type_error:last-of-type {
+    margin-bottom: 0px;
+  }
+  
+  @media screen and (max-width:620px) {
+    .popup__popup-form_type_error:last-of-type {
+      margin-bottom: 0px;
+    }
+  }

@@ -1,0 +1,25 @@
+.signup-form__input_text {
+    padding: 0 0 11px 0;
+    box-sizing: border-box;
+    border: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 30px;
+    min-width: 358px;
+    border: none;
+    border-bottom: 2px solid #CCCCCC;
+    background-color: black;
+    color: #CCCCCC;
+}
+
+.signup-form__input_text:focus {
+    outline: none;
+}
+
+@media screen and (max-width:790px) {
+    .signup-form__input_text {
+        min-width: 260px;
+    }
+}

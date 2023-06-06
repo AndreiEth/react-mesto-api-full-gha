@@ -1,0 +1,28 @@
+.popup__bin-button {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    width: 358px;
+    height: 50px;
+    color: #FFFFFF;
+    border: none;
+    background-color: #000000;
+    border-radius: 2px;
+    transition: opacity 1s linear 0s;
+}
+
+.popup__bin-button:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width:620px) {
+    .popup__bin-button {
+        font-size: 14px;
+        line-height: 17px;
+        width: 238px;
+        height: 46px;
+    }
+}

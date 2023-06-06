@@ -1,0 +1,8 @@
+.signup-form__redirect{
+    text-align: center;
+    padding-top: 15px;
+    width: var(--width-form-register-ladge);
+    min-height: 32px;
+    font-size: 14px;
+    line-height: 1.2;
+}

@@ -1,0 +1,26 @@
+.element__bin {
+    position: absolute;
+    background-image: url(../../../images/bin.svg);
+    background-color: rgba(0, 0, 0, 0);
+    background-repeat: 0;
+    background-size: 18px 19px;
+    width: 18px;
+    height: 19px;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    transition: opacity 1s linear 0s;
+    right: 20px;
+    top: 20px;
+    visibility: hidden;
+}
+
+.element__bin_visible {
+    visibility: visible;
+}
+
+.element__bin:hover {
+    opacity: 0.6;
+    transform: scale(1.5);
+    transition: 0.6s;
+}

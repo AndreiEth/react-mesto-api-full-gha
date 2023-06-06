@@ -1,0 +1,12 @@
+.signup-form__redirect_link{
+    padding-left: 5px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: opacity 1s linear 0s;
+    margin-top: 5px;
+}
+
+.signup-form__redirect_link:hover {
+    opacity: 0.6;
+}
