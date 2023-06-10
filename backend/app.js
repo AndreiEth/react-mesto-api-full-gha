@@ -22,17 +22,17 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger);
-app.use(router);
+app.use('/api', router);
 app.use(errorLogger);
 app.use(errors());
 
-// app.use((error, req, res, next) => {
-//   const { status = 500, message } = error;
-//   res.status(status).send({
-//     message: status === 500 ?? `На сервере произошла ошибка${message}`,
-//   });
-//   next();
-// });
+app.use((error, req, res, next) => {
+  const { status = 500, message } = error;
+  res.status(status).send({
+    message: status === 500 ?? `На сервере произошла ошибка${message}`,
+  });
+  next();
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
