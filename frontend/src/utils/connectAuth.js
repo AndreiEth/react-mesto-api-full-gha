@@ -1,6 +1,7 @@
 const connectAuth = {
     'baseUrl':
-    "https://auth.nomoreparties.co",
+    "http://localhost:5050",
+    'withCredentials': true,
 };
 
 export default connectAuth

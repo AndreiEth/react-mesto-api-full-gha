@@ -27,6 +27,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [removeCard, setRemoveCard] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -47,17 +48,17 @@ function App() {
 
   // add & delete like on card
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     if (isLiked) {
       api.dislike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
         })
         .catch(err => console.log(err));
     } else {
       api.like(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
         })
         .catch(err => console.log(err));
     }
@@ -150,14 +151,16 @@ function App() {
 
 
   useEffect(() => {
-    if (loggedIn) {
-      api.getMe()
-        .then((userInfo) => {
+    api.getMe()
+      .then((userInfo) => {
+        if(userInfo){
           setCurrentUser(userInfo);
-        })
-        .catch(err => console.log(err))
-    }
-  }, [loggedIn]);
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => console.log(err))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (loggedIn) {
@@ -185,7 +188,8 @@ function App() {
           loggedIn={loggedIn}
         />
         <Routes>
-          <Route exact path="/" element={
+          {
+          loading ? <></> :  <Route exact path="/" element={
             <ProtectedRoute
               component={Main}
               loggedIn={loggedIn}
@@ -198,6 +202,8 @@ function App() {
               onCardLike={handleCardLike}
             />}
           />
+          }
+         
           <Route path="/sign-up" element={<Register handleRegister={handleRegister} onSuccess={onSuccess} />} />
           <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
         </Routes>

@@ -30,6 +30,7 @@ class Auth {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body: JSON.stringify({ email, password })
         })
         .then(this._checkResponse)

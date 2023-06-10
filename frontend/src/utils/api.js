@@ -60,7 +60,9 @@ class Api {
       headers: {
         ...this.options.headers,
         ...init.headers,
+        
       },
+      credentials: this.options.credentials,
     })
       .then((res) => {
         if (res.ok) {
@@ -77,9 +79,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55',
+  baseUrl: 'http://localhost:5050',
   headers: {
-    'authorization': '9c0c6a9e-7d3d-49e1-be95-1a9e7dd07b2f',
     'Content-Type': 'application/json',
   },
+  credentials: 'include'
 });

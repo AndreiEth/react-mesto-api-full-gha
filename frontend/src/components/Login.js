@@ -27,12 +27,9 @@ function Login({ handleLogin }) {
         };
         auth.authorize(formValue.email, formValue.password)
             .then((data) => {
-                if (data.token) {
-                    localStorage.setItem('jwt', data.token);
                     setFormValue({ email: '', password: '' });
                     handleLogin();
                     navigate('/', { replace: true });
-                }
             })
             .catch(err => console.log(err))
     }
