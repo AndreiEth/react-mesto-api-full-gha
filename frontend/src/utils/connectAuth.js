@@ -1,6 +1,6 @@
 const connectAuth = {
     'baseUrl':
-    "http://localhost:5050/api",
+    "api",
     'withCredentials': true,
 };
 
