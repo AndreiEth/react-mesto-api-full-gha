@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(helmet());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://andrei-eth.nomoredomains.rocks',
   credentials: true,
 }));
 app.use(bodyParser.json());
