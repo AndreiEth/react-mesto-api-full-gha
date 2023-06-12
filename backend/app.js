@@ -8,7 +8,7 @@ const { errors } = require('celebrate');
 const router = require('./routes/router');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/mestodb');

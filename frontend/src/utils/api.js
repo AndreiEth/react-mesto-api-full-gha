@@ -79,9 +79,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'api',
+  baseUrl: "https://api.andrei-eth.nomoredomains.rocks",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
-  credentials: 'include'
+  credentials: "include",
 });
