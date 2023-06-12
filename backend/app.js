@@ -14,16 +14,15 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(helmet());
-// app.use(cors({
-//   origin: 'http://andrei-eth.nomoredomains.rocks',
-//   credentials: true,
-// }));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger);
-app.use('/api', router);
+app.use(router);
 app.use(errorLogger);
 app.use(errors());
 
