@@ -4,6 +4,7 @@ const userSchema = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 module.exports.getUsers = (req, res, next) => {
   userSchema
@@ -118,7 +119,10 @@ module.exports.createUser = (req, res, next) => {
         })
         .then((user) => {
           res.send({
-            name: user.name, about: user.about, avatar: user.avatar, email: user.email,
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+            email: user.email,
           });
         })
         .catch((err) => {
@@ -142,18 +146,17 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return userSchema
-    .findUserByCredentials(email, password)
+    .findOne({ email })
+    .select('+password')
     .then((user) => {
+      const passwordCheck = bcrypt.compare(password, user.password);
+      if (!user || !passwordCheck) {
+        throw new UnauthorizedError('Wrong email or password');
+      }
       const token = jwt.sign({ _id: user._id }, 'gen', {
         expiresIn: '7d',
       });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      })
-        .status(200)
-        .send({ token, message: 'Successfully logging in' });
+      res.send({ token, message: 'Successfully logging in' });
     })
     .catch(next);
 };
