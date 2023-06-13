@@ -151,6 +151,7 @@ function App() {
 
 
   useEffect(() => {
+	if (loggedIn) {
     api.getMe()
       .then((userInfo) => {
         if(userInfo){
@@ -160,7 +161,7 @@ function App() {
       })
       .catch(err => console.log(err))
       .finally(() => setLoading(false));
-  }, []);
+  }}, []);
 
   useEffect(() => {
     if (loggedIn) {

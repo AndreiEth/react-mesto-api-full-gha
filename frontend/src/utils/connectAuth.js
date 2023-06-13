@@ -1,7 +1,6 @@
 const connectAuth = {
-    'baseUrl':
-    "api",
-    'withCredentials': true,
+  baseUrl: "https://api.andrei-eth.nomoredomains.rocks",
+  withCredentials: true,
 };
 
 export default connectAuth
