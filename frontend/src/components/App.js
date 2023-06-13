@@ -1,20 +1,26 @@
-import '../index.css';
-import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory, Redirect, withRouter } from 'react-router-dom';
-import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
-import ImagePopup from './ImagePopup';
-import { api } from '../utils/api';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import BinPopup from './BinPopup';
-import ProtectedRoute from './ProtectedRoute';
-import Login from './Login';
-import Register from './Register';
-import InfoTooltip from './InfoTooltip';
+import "../index.css";
+import { useState, useEffect } from "react";
+import {
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+  withRouter,
+} from "react-router-dom";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import ImagePopup from "./ImagePopup";
+import { api } from "../utils/api";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+import BinPopup from "./BinPopup";
+import ProtectedRoute from "./ProtectedRoute";
+import Login from "./Login";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 import auth from "../utils/Auth";
 
 function App() {
@@ -28,39 +34,47 @@ function App() {
   const [removeCard, setRemoveCard] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
 
   const history = useHistory();
 
-  // delete card 
+  // delete card
   function handleCardDelete(card) {
-    api.removeCard(card._id)
+    api
+      .removeCard(card._id)
       .then(() => {
         setRemoveCard(card);
-        setCards((newArray) => newArray.filter((item) => card._id !== item._id));
+        setCards((newArray) =>
+          newArray.filter((item) => card._id !== item._id)
+        );
         closeAllPopups();
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
-
 
   // add & delete like on card
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     if (isLiked) {
-      api.dislike(card._id)
+      api
+        .dislike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard.data : c))
+          );
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
-      api.like(card._id)
+      api
+        .like(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard.data : c))
+          );
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   }
 
@@ -70,12 +84,13 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setMe(data)
+    api
+      .setMe(data)
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   // new card popup
@@ -84,12 +99,13 @@ function App() {
   }
 
   function handleAddPlaceSubmit(data) {
-    api.createCard(data)
+    api
+      .createCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   // avatar profile
@@ -98,12 +114,13 @@ function App() {
   }
 
   function handleUpdateAvatar(avatar) {
-    api.setAvatar(avatar)
+    api
+      .setAvatar(avatar)
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   function handleCardClick(card) {
@@ -137,40 +154,42 @@ function App() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-	  console.log(jwt);
-      auth.checkToken(jwt)
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      auth
+        .checkToken(jwt)
         .then((res) => {
           setLoggedIn(true);
-          setEmail(res.data.email);
+          setEmail(res.email);
           history.push("/");
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err));
     }
   }, []);
 
-
   useEffect(() => {
-	if (loggedIn) {
-    api.getMe()
-      .then((userInfo) => {
-        if(userInfo){
-          setCurrentUser(userInfo);
-          setLoggedIn(true);
-        }
-      })
-      .catch(err => console.log(err))
-      .finally(() => setLoading(false));
-  }}, []);
+    if (loggedIn) {
+      api
+        .getMe()
+        .then((userInfo) => {
+          if (userInfo) {
+            setCurrentUser(userInfo);
+            setLoggedIn(true);
+          }
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    }
+  }, []);
 
   useEffect(() => {
     if (loggedIn) {
-      api.getCards()
+      api
+        .getCards()
         .then((cards) => {
           setCards(cards);
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err));
     }
   }, [loggedIn]);
 

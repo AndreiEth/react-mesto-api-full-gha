@@ -4,52 +4,52 @@ class Api {
   }
 
   getCards() {
-    return this.request('/cards');
+    return this.request("/cards");
   }
 
   getMe() {
-    return this.request('/users/me');
+    return this.request("/users/me");
   }
 
   setMe(data) {
-    return this.request('/users/me', {
-      method: 'PATCH',
+    return this.request("/users/me", {
+      method: "PATCH",
       body: this.getBody(data),
     });
   }
 
   getAllData() {
-    return Promise.all([this.getMe(), this.getCards()])
+    return Promise.all([this.getMe(), this.getCards()]);
   }
 
   createCard(data) {
-    return this.request('/cards', {
-      method: 'POST',
+    return this.request("/cards", {
+      method: "POST",
       body: this.getBody(data),
     });
   }
 
   removeCard(cardId) {
     return this.request(`/cards/${cardId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
   like(cardId) {
     return this.request(`/cards/${cardId}/likes`, {
-      method: 'PUT',
+      method: "PUT",
     });
   }
 
   dislike(cardId) {
     return this.request(`/cards/${cardId}/likes`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
   setAvatar(avatar) {
     return this.request(`/users/me/avatar`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: this.getBody({ avatar }),
     });
   }
@@ -60,17 +60,14 @@ class Api {
       headers: {
         ...this.options.headers,
         ...init.headers,
-        
       },
-      credentials: this.options.credentials,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(res);
-        }
-      })
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(res);
+      }
+    });
   }
 
   getBody(data) {
@@ -82,6 +79,6 @@ export const api = new Api({
   baseUrl: "https://api.andrei-eth.nomoredomains.rocks",
   headers: {
     "Content-Type": "application/json",
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
   },
-  credentials: "include",
 });
