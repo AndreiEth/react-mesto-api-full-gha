@@ -13,6 +13,9 @@ module.exports = (req, res, next) => {
     const token = extractBearerToken(authorization);
     const payload = jwt.verify(token, 'gen');
 
+    console.log(token);
+    console.log(payload);
+
     req.user = payload;
   } catch (err) {
     return next(new UnauthorizedError('You need to log in'));
