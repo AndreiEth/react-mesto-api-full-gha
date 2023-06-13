@@ -10,40 +10,24 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-const allowedCors = [
-  'https://andrei-eth.nomoredomains.rocks',
-  'http://andrei-eth.nomoredomains.rocks',
-  'localhost:3000',
-];
-
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.json());
 app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  const requestHeaders = req.headers['access-control-request-headers'];
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE',
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
   }
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-  }
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
-  }
-
   next();
-  return null;
 });
+app.use(express.json());
 app.use(requestLogger);
 app.use('/api', router);
 app.use(errorLogger);
