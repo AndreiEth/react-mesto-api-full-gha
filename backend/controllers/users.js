@@ -31,7 +31,7 @@ module.exports.getUserById = (req, res, next) => {
     });
 };
 
-module.exports.getMe = (req, res, next) => {
+module.exports.getUser = (req, res, next) => {
   userSchema
     .findById(req.user._id)
     .then((user) => {
