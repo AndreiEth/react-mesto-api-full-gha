@@ -9,7 +9,7 @@ module.exports.getUsers = (req, res, next) => {
   userSchema
     .find({})
     .then((users) => res.send(users))
-    .catch((e) => console.error(e));
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -31,7 +31,7 @@ module.exports.getUserById = (req, res, next) => {
     });
 };
 
-module.exports.getUser = (req, res, next) => {
+module.exports.getMe = (req, res, next) => {
   userSchema
     .findById(req.user._id)
     .then((user) => {
