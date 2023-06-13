@@ -7,7 +7,8 @@ module.exports = (req, res, next) => {
   try {
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith('Bearer ')) {
-      return next(new UnauthorizedError('You need to log in'));
+      next(new UnauthorizedError('You need to log in'));
+      return;
     }
 
     const token = extractBearerToken(authorization);
@@ -18,7 +19,8 @@ module.exports = (req, res, next) => {
 
     req.user = payload;
   } catch (err) {
-    return next(new UnauthorizedError('You need to log in'));
+    next(new UnauthorizedError('You need to log in'));
+    return;
   }
-  return next();
+  next();
 };
