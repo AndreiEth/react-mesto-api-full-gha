@@ -11,16 +11,31 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+const whitelist = [
+  'https://andrei-eth.nomoredomains.rocks',
+  'http://localhost:3000',
+];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger);
-app.use('/api', router);
+app.use('/', router);
 app.use(errorLogger);
 app.use(errors());
 
