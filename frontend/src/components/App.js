@@ -1,6 +1,6 @@
 import '../index.css';
 import { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect, withRouter } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -32,7 +32,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   // delete card 
   function handleCardDelete(card) {
@@ -139,15 +139,16 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
+	  console.log(jwt);
       auth.checkToken(jwt)
         .then((res) => {
           setLoggedIn(true);
           setEmail(res.data.email);
-          navigate("/", { replace: true });
+          history.push("/");
         })
         .catch(err => console.log(err))
     }
-  }, [navigate]);
+  }, []);
 
 
   useEffect(() => {
@@ -177,41 +178,37 @@ function App() {
     localStorage.removeItem("jwt");
     setEmail("");
     setLoggedIn(false);
-    navigate("/sign-in", { replace: true });
+    history.push("/sign-in");
   }
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header
-          email={email}
-          onSignOut={handleSingOut}
-          loggedIn={loggedIn}
-        />
-        <Routes>
-          {
-          loading ? <></> :  <Route exact path="/" element={
-            <ProtectedRoute
-              component={Main}
-              loggedIn={loggedIn}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onBinClick={handleBinPopupClick}
-              cards={cards}
-              onCardLike={handleCardLike}
-            />}
-          />
-          }
-         
-          <Route path="/sign-up" element={<Register handleRegister={handleRegister} onSuccess={onSuccess} />} />
-          <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
-        </Routes>
+        <Header email={email} onSignOut={handleSingOut} loggedIn={loggedIn} />
+        <Switch>
+          <Route path="/sign-up">
+            <Register handleRegister={handleRegister} onSuccess={onSuccess} />
+          </Route>
+          <Route path="/sign-in">
+            <Login handleLogin={handleLogin} />
+          </Route>
+          <ProtectedRoute
+            exact
+            path="/"
+            component={Main}
+            loggedIn={loggedIn}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onBinClick={handleBinPopupClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+          >
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
+          </ProtectedRoute>
+        </Switch>
 
-        {loggedIn &&
-          <Footer />
-        }
+        {loggedIn && <Footer />}
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -248,10 +245,9 @@ function App() {
           onClose={closeAllPopups}
           isSuccessful={isSuccessful}
         />
-
       </div>
     </CurrentUserContext.Provider>
   );
 }
 
-export default App;
+export default withRouter(App);

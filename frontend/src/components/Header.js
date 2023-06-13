@@ -1,5 +1,5 @@
 import logoMesto from '../images/logo.svg'
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Switch, Link, withRouter } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 
@@ -34,26 +34,21 @@ function Header({ email, onSignOut, loggedIn }) {
 
   return (
     <>
-      {loggedIn && burgerMenuUp &&
+      {loggedIn && burgerMenuUp && (
         <div className="header__container">
           <p className="header__email">{email}</p>
-          <Link onClick={onSignOut}
-            className="header__exit"
-          >
+          <Link to="/sign-in" onClick={onSignOut} className="header__exit">
             Выйти
           </Link>
         </div>
-      }
+      )}
       <header className="header">
         <img className="header__logo" src={logoMesto} alt="Лого" />
-        <Routes>
+        <Switch>
           <Route
             path="sign-in"
             element={
-              <Link
-                to="/sign-up"
-                className="header__link"
-              >
+              <Link to="/sign-up" className="header__link">
                 Регистрация
               </Link>
             }
@@ -61,10 +56,7 @@ function Header({ email, onSignOut, loggedIn }) {
           <Route
             path="sign-up"
             element={
-              <Link
-                to="/sign-in"
-                className="header__link"
-              >
+              <Link to="/sign-in" className="header__link">
                 Войти
               </Link>
             }
@@ -74,30 +66,33 @@ function Header({ email, onSignOut, loggedIn }) {
             path="/"
             element={
               <>
-                {currentWidth > 620
-                  ?
+                {currentWidth > 620 ? (
                   <div className="header__container">
                     <p className="header__email">{email}</p>
-                    <Link onClick={onSignOut}
+                    <Link
+                      to="/sign-in"
+                      onClick={onSignOut}
                       className="header__exit"
                     >
                       Выйти
                     </Link>
                   </div>
-                  :
+                ) : (
                   <button
-                    className={`header__button ${burgerMenu && "header__button_close"}`}
+                    className={`header__button ${
+                      burgerMenu && "header__button_close"
+                    }`}
                     type="button"
                     onClick={handleHeaderBurgerClick}
                   ></button>
-                }
+                )}
               </>
             }
           />
-        </Routes>
+        </Switch>
       </header>
     </>
   );
 }
 
-export default Header
+export default withRouter(Header);

@@ -153,7 +153,7 @@ module.exports.login = (req, res, next) => {
         sameSite: true,
       })
         .status(200)
-        .send({ message: 'Successfully logging in' });
+        .send({ token, message: 'Successfully logging in' });
     })
     .catch(next);
 };
