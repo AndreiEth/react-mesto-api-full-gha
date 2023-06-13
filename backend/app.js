@@ -19,6 +19,9 @@ const allowedCors = [
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(helmet());
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.json());
 app.use((req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;
@@ -41,9 +44,6 @@ app.use((req, res, next) => {
   next();
   return null;
 });
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(express.json());
 app.use(requestLogger);
 app.use('/api', router);
 app.use(errorLogger);
