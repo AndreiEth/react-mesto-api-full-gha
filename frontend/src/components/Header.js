@@ -1,6 +1,8 @@
 import logoMesto from '../images/logo.svg'
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
+
+
 
 function Header({ email, onSignOut, loggedIn }) {
 
@@ -35,9 +37,9 @@ function Header({ email, onSignOut, loggedIn }) {
       {loggedIn && burgerMenuUp && (
         <div className="header__container">
           <p className="header__email">{email}</p>
-          <button onClick={onSignOut} className="header__exit">
+          <Link to="/sign-in" onClick={onSignOut} className="header__exit">
             Выйти
-          </button>
+          </Link>
         </div>
       )}
       <header className="header">
@@ -67,12 +69,13 @@ function Header({ email, onSignOut, loggedIn }) {
                 {currentWidth > 620 ? (
                   <div className="header__container">
                     <p className="header__email">{email}</p>
-                    <button
+                    <Link
+                      to="/sign-in"
                       onClick={onSignOut}
                       className="header__exit"
                     >
                       Выйти
-                    </button>
+                    </Link>
                   </div>
                 ) : (
                   <button
@@ -92,4 +95,4 @@ function Header({ email, onSignOut, loggedIn }) {
   );
 }
 
-export default withRouter(Header);
+export default Header;
