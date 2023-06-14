@@ -16,6 +16,7 @@ const whitelist = [
 ];
 const corsOptions = {
   origin(origin, callback) {
+    console.log("🚀 ~ file: app.js:19 ~ origin ~ origin:", origin)
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
