@@ -117,22 +117,24 @@ module.exports.createUser = (req, res, next) => {
           email,
           password: hash,
         })
-        .then((user) => res.status(201).send({
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          email: user.email,
-        }))
+        .then((user) => {
+          res.status(201).send({
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+            email: user.email,
+          })
+	});
         .catch((err) => {
           if (err.code === 11000) {
             return next(
               new ConflictError(
-                'The username with this email has already been registered',
-              ),
+                "The username with this email has already been registered"
+              )
             );
           }
-          if (err.name === 'ValidationError') {
-            return next(new BadRequestError('Incorrect input'));
+          if (err.name === "ValidationError") {
+            return next(new BadRequestError("Incorrect input"));
           }
           return next(err);
         });

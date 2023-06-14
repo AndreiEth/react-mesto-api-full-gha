@@ -10,15 +10,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
-const apiRequestLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 2, // limit each IP to 2 requests per windowMs
-  handler(req, res) {
-    return res.status(429).json({
-      error: 'You sent too many requests. Please wait a while then try again',
-    });
-  },
-});
+// const apiRequestLimiter = rateLimit({
+//   windowMs: 1 * 60 * 1000, // 1 minute
+//   max: 2, // limit each IP to 2 requests per windowMs
+//   handler(req, res) {
+//     return res.status(429).json({
+//       error: 'You sent too many requests. Please wait a while then try again',
+//     });
+//   },
+// });
 
 const whitelist = [
   'https://andrei-eth.nomoredomains.rocks',
@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(requestLogger);
-app.use(apiRequestLimiter);
+// app.use(apiRequestLimiter);
 app.use('/', router);
 app.use(errorLogger);
 app.use(errors());
