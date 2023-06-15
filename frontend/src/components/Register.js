@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory, withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import auth from "../utils/Auth"
 
@@ -9,7 +9,7 @@ function Register({ handleRegister, onSuccess }) {
         password: '',
     })
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleChange = (evt) => {
         const { name, value } = evt.target;
@@ -30,7 +30,7 @@ function Register({ handleRegister, onSuccess }) {
                 setFormValue({ email: '', password: '' });
                 onSuccess(true);
                 handleRegister();
-                history.push('/sign-in');
+                navigate("/sign-in", { replace: true });
             }
             )
             .catch((err) => {
@@ -52,4 +52,4 @@ function Register({ handleRegister, onSuccess }) {
     );
 }
 
-export default withRouter(Register);
+export default Register;

@@ -1,11 +1,14 @@
 import logoMesto from '../images/logo.svg'
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 
 
 function Header({ email, onSignOut, loggedIn }) {
-
+// console.log("🚀 ~ file: Header.js:8 ~ Header ~ loggedIn:", loggedIn)
+//   const location = useLocation();
+//   console.log("🚀 ~ file: Header.js:10 ~ Header ~ location:", location)
+// const currentPath = location.pathname
   const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
   const [burgerMenu, setBurgerMenu] = useState(false);
   const [burgerMenuUp, setBurgerMenuUp] = useState(false);
@@ -37,14 +40,14 @@ function Header({ email, onSignOut, loggedIn }) {
       {loggedIn && burgerMenuUp && (
         <div className="header__container">
           <p className="header__email">{email}</p>
-          <Link to="/sign-in" onClick={onSignOut} className="header__exit">
+          <Link onClick={onSignOut} className="header__exit">
             Выйти
           </Link>
         </div>
       )}
       <header className="header">
         <img className="header__logo" src={logoMesto} alt="Лого" />
-        <Switch>
+        <Routes>
           <Route
             path="sign-in"
             element={
@@ -69,11 +72,7 @@ function Header({ email, onSignOut, loggedIn }) {
                 {currentWidth > 620 ? (
                   <div className="header__container">
                     <p className="header__email">{email}</p>
-                    <Link
-                      to="/sign-in"
-                      onClick={onSignOut}
-                      className="header__exit"
-                    >
+                    <Link onClick={onSignOut} className="header__exit">
                       Выйти
                     </Link>
                   </div>
@@ -89,7 +88,7 @@ function Header({ email, onSignOut, loggedIn }) {
               </>
             }
           />
-        </Switch>
+        </Routes>
       </header>
     </>
   );

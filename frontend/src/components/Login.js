@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory, withRouter } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import auth from "../utils/Auth"
 
@@ -9,7 +9,7 @@ function Login({ handleLogin }) {
         password: ''
     })
 
-    const history = useHistory();
+	const navigate = useNavigate();
 
     const handleChange = (evt) => {
         const { name, value } = evt.target;
@@ -29,7 +29,7 @@ function Login({ handleLogin }) {
             .then((data) => {
                     setFormValue({ email: '', password: '' });
                     handleLogin();
-                    history.push('/');
+                    navigate("/", { replace: true });
             })
             .catch(err => console.log(err))
     }
@@ -46,5 +46,5 @@ function Login({ handleLogin }) {
       );
 }
 
-export default withRouter(Login);
+export default Login;
 
